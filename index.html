@@ -1,106 +1,258 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WaynerSolar - Dashboard Prospects</title>
-    <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 20px; }
-        .container { max-width: 1200px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        h2 { color: #333; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
-        th { background-color: #ff9800; color: white; }
-        tr:nth-child(even) { background-color: #f9f9f9; }
-        .loading { font-style: italic; color: #666; }
-    </style>
+
+    <title>WaynerCom</title>
+
+    <!-- Feuille de style -->
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<div class="container">
-    <h2>Leads & Prospects Solaires (WaynerSolar)</h2>
-    <p class="loading" id="status">Chargement des données depuis Firebase...</p>
-    
-    <table id="prospectsTable" style="display:none;">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Client</th>
-                <th>Téléphone</th>
-                <th>Ville</th>
-                <th>Conso (kWh)</th>
-                <th>Puissance (kWc)</th>
-                <th>Solution</th>
-            </tr>
-        </thead>
-        <tbody id="tableBody">
-            <!-- Les données seront injectées ici par JavaScript -->
-        </tbody>
-    </table>
-</div>
+    <!-- ==================================================
+         EN-TÊTE
+    =================================================== -->
 
-<!-- SDK Firebase (compat version pour intégration HTML simple) -->
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firestore/sdk/database";
+    <header class="header">
 
-    // Votre configuration Firebase
-    const firebaseConfig = {
-      apiKey: "AIzaSyDTG1pxJuLDpzEZUguUXBtDxL6pIqQghsA",
-      authDomain: "waynerenergie.firebaseapp.com",
-      projectId: "waynerenergie",
-      storageBucket: "waynerenergie.firebasestorage.app",
-      messagingSenderId: "636905984764",
-      appId: "1:636905984764:web:4f63b3244558bfb811bd79",
-      measurementId: "G-48FSM3Z9BP"
-    };
+        <!--
+            Image principale.
+            Si ton image n'est pas encore disponible,
+            tu peux supprimer cette balise temporairement.
+        -->
+        <img
+            src="images/banniere.jpg"
+            alt="WaynerCom"
+            class="image-principale"
+        >
 
-    // Initialisation de Firebase
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+        <h1>WaynerCom</h1>
 
-    async function loadProspects() {
-        const statusEl = document.getElementById("status");
-        const tableEl = document.getElementById("prospectsTable");
-        const tbodyEl = document.getElementById("tableBody");
+        <p class="slogan">
+            Des idées aujourd’hui, un avenir meilleur demain.
+        </p>
 
-        try {
-            // Requête vers la collection waynerenergiecallvapi
-            const q = query(collection(db, "waynerenergiecallvapi"), orderBy("date_creation", "desc"));
-            const querySnapshot = await getDocs(q);
+    </header>
 
-            if (querySnapshot.empty) {
-                statusEl.textContent = "Aucun prospect enregistré pour le moment.";
-                return;
-            }
 
-            tbodyEl.innerHTML = "";
-            querySnapshot.forEach((doc) => {
-                const data = doc.data();
-                const row = document.createElement("tr");
-                
-                row.innerHTML = `
-                    <td>${data.date_creation ? new Date(data.date_creation).toLocaleString() : 'N/C'}</td>
-                    <td><strong>${data.nom_client || 'Inconnu'}</strong><br><small>${data.email || ''}</small></td>
-                    <td>${data.telephone || 'Non renseigné'}</td>
-                    <td>${data.ville || 'N/C'}</td>
-                    <td>${data.consommation_annuelle || 'N/C'}</td>
-                    <td>${data.puissance_kwc || 'N/C'}</td>
-                    <td>${data.solution_solaire || 'Standard'}</td>
-                `;
-                tbodyEl.appendChild(row);
-            });
+    <!-- ==================================================
+         MENU PRINCIPAL
+    =================================================== -->
 
-            statusEl.style.display = "none";
-            tableEl.style.display = "table";
-        } catch (error) {
-            console.error("Erreur lors du chargement : ", error);
-            statusEl.textContent = "Erreur de chargement des données (Vérifiez les règles Firestore).";
-        }
-    }
+    <main>
 
-    loadProspects();
-</script>
+        <section class="menu-principal">
+
+
+            <!-- ==========================================
+                 RÉCUPÉRATION DES APPELS VAPI
+            =========================================== -->
+
+            <a
+                href="recupecall_vapi.html"
+                class="gros-bouton"
+            >
+
+                <span>📞</span>
+
+                <strong>
+                    Récupération des appels Vapi
+                </strong>
+
+                <span>→</span>
+
+            </a>
+
+
+            <!-- ==========================================
+                 PLANNING CRÉATIONS
+            =========================================== -->
+
+            <a
+                href="planning.html"
+                class="gros-bouton"
+            >
+
+                <span>📅</span>
+
+                <strong>
+                    Planning Créations
+                </strong>
+
+                <span>→</span>
+
+            </a>
+
+
+            <!-- ==========================================
+                 AGENDA SOLAIRE
+            =========================================== -->
+
+            <a
+                href="agenda.html"
+                class="gros-bouton"
+            >
+
+                <span>☀️</span>
+
+                <strong>
+                    Agenda Solaire WA
+                </strong>
+
+                <span>→</span>
+
+            </a>
+
+
+            <!-- ==========================================
+                 ENTREPRISES VISITÉES
+            =========================================== -->
+
+            <a
+                href="entreprises.html"
+                class="gros-bouton"
+            >
+
+                <span>👥</span>
+
+                <strong>
+                    Entreprises Visitées
+                </strong>
+
+                <span>→</span>
+
+            </a>
+
+
+        </section>
+
+
+        <!-- ==================================================
+             LIENS UTILES
+        =================================================== -->
+
+        <section class="liens-utiles">
+
+            <h2>
+                ⭐ Liens utiles
+            </h2>
+
+
+            <!-- RECHERCHE DES BESOINS -->
+
+            <a
+                href="recherche.html"
+                class="petit-bouton"
+            >
+
+                <span>🔎</span>
+
+                <span>
+                    Recherche Des Besoins
+                </span>
+
+                <span>→</span>
+
+            </a>
+
+
+            <!-- NOTE DE LA SEMAINE -->
+
+            <a
+                href="note.html"
+                class="petit-bouton"
+            >
+
+                <span>📝</span>
+
+                <span>
+                    Note De La Semaine
+                </span>
+
+                <span>→</span>
+
+            </a>
+
+
+            <!-- À PROPOS -->
+
+            <a
+                href="apropos.html"
+                class="petit-bouton"
+            >
+
+                <span>ℹ️</span>
+
+                <span>
+                    À propos
+                </span>
+
+                <span>→</span>
+
+            </a>
+
+        </section>
+
+    </main>
+
+
+    <!-- ==================================================
+         PIED DE PAGE
+    =================================================== -->
+
+    <footer>
+
+        <div class="ligne"></div>
+
+        <p>
+            Copyright WA - Droits réservés - Mentions Légales - @formule
+            <br>
+            contact@andywaynerwa.cloud
+        </p>
+
+
+        <!-- ==================================================
+             RÉSEAUX SOCIAUX
+        =================================================== -->
+
+        <div class="reseaux">
+
+            <a
+                href="#"
+                aria-label="Instagram"
+            >
+                📸
+            </a>
+
+            <a
+                href="#"
+                aria-label="YouTube"
+            >
+                ▶️
+            </a>
+
+            <a
+                href="#"
+                aria-label="Facebook"
+            >
+                f
+            </a>
+
+            <a
+                href="#"
+                aria-label="X"
+            >
+                𝕏
+            </a>
+
+        </div>
+
+    </footer>
 
 </body>
+
 </html>
